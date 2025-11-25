@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <title>Cookie Pattern Navbar</title>
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #D7B894;
+    }
+
+    .magic-underline {
+      position: absolute;
+      bottom: 0;
+      height: 2.5px;
+      background-color: white;
+      border-radius: 999px;
+      transition:
+        width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.25s ease;
+      opacity: 0;
+    }
+
+    .cookie {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      font-size: 22px;
+      opacity: 0.35;
+      user-select: none;
+      pointer-events: none;
+      transform: rotate(calc(var(--r) * 1deg));
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+
+  <nav class="bg-yellow-800 shadow-md w-full fixed top-0 left-0 z-50">
+
+    <div class="absolute inset-0 pointer-events-none opacity-25 overflow-hidden" id="cookie-layer"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 py-6 flex items-center justify-between">
+
+      <div class="text-xl font-bold text-white">
+        CookieByte
+      </div>
+
+      <div class="relative hidden md:block" @mouseleave="hideUnderline">
+        <ul class="flex space-x-10 text-gray-200 font-medium">
+          <li v-for="(item, index) in menus"
+              :key="index"
+              class="relative cursor-pointer py-1"
+              @mouseenter="moveUnderline($event)"
+          >
+            {{ item }}
+          </li>
+        </ul>
+
+        <div class="magic-underline"
+             :style="{
+               width: underline.width + 'px',
+               transform: 'translateX(' + underline.left + 'px)',
+               opacity: underline.show ? 1 : 0
+             }">
+        </div>
+      </div>
+
+      <button class="md:hidden focus:outline-none text-white" @click="open = !open">
+        <div class="space-y-1.5 transition-all">
+          <div class="w-8 h-1 bg-white"></div>
+          <div class="w-8 h-1 bg-white"></div>
+          <div class="w-8 h-1 bg-white"></div>
+        </div>
+      </button>
+
+    </div>
+
+    <div class="md:hidden px-4 pb-4" v-show="open">
+      <ul class="space-y-3 text-gray-200 font-medium">
+        <li v-for="m in menus" class="block">{{ m }}</li>
+      </ul>
+    </div>
+
+  </nav>
+
+  <section class="w-full flex justify-center px-4 mt-40 pb-20">
+    <div class="bg-white rounded-2xl shadow-xl flex flex-col md:flex-row overflow-hidden max-w-4xl">
+
+      <div class="md:w-1/2 w-full">
+        <img 
+          src="https://cdn.loveandlemons.com/wp-content/uploads/2020/12/cookie-recipes.jpg" 
+          alt="Cookie" 
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <div class="md:w-1/2 w-full p-8 flex flex-col justify-center">
+        <h2 class="text-3xl font-bold text-yellow-800 mb-3">
+          Freshly Baked Happiness
+        </h2>
+
+        <p class="text-gray-700 leading-relaxed mb-5">
+          CookieByte menghadirkan cookies lembut dan hangat seperti buatan rumah.
+          Dipanggang setiap hari dengan bahan premium, rasanya manis pas dan bikin nagih.
+        </p>
+
+        <p class="font-semibold text-yellow-700">
+          🍪 Made with love • No preservatives • Always fresh
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+const { createApp } = Vue;
+
+function spawnCookies() {
+  const layer = document.getElementById("cookie-layer");
+  if (!layer) return;
+
+  layer.innerHTML = "";
+
+  const cookieEmoji = ["🍪"];
+  const total = 22;
+
+  const rect = layer.getBoundingClientRect();
+  const placedCookies = [];
+  const cookieSize = 32;
+  const minDistance = cookieSize * 1.2;
+
+  function isOverlapping(x, y) {
+    for (const c of placedCookies) {
+      const dx = x - c.x;
+      const dy = y - c.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < minDistance) return true;
+    }
+    return false;
+  }
+
+  for (let i = 0; i < total; i++) {
+    let x, y, tries = 0;
+
+    do {
+      x = Math.random() * (rect.width - cookieSize);
+      y = Math.random() * (rect.height - cookieSize);
+      tries++;
+      if (tries > 50) break;
+    } while (isOverlapping(x, y));
+
+    placedCookies.push({ x, y });
+
+    const c = document.createElement("div");
+    c.className = "cookie";
+    c.style.left = x + "px";
+    c.style.top = y + "px";
+    c.style.setProperty("--r", Math.random() * 360);
+    c.textContent = cookieEmoji[Math.floor(Math.random() * cookieEmoji.length)];
+
+    layer.appendChild(c);
+  }
+}
+
+window.addEventListener("load", spawnCookies);
+window.addEventListener("resize", spawnCookies);
+
+
+createApp({
+  data() {
+    return {
+      menus: ["Home", "About", "Services", "Contact"],
+      underline: { left: 0, width: 0, show: false },
+      open: false
+    };
+  },
+  methods: {
+    moveUnderline(event) {
+      const el = event.target;
+      const rect = el.getBoundingClientRect();
+      const parentRect = el.parentElement.getBoundingClientRect();
+
+      this.underline.left = rect.left - parentRect.left;
+      this.underline.width = rect.width;
+      this.underline.show = true;
+    },
+    hideUnderline() {
+      this.underline.show = false;
+    }
+  }
+}).mount("#app");
+</script>
+
+</body>
+</html>
