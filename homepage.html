@@ -24,6 +24,14 @@
         opacity 0.25s ease;
       opacity: 0;
     }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 
@@ -79,12 +87,12 @@
 
     </div>
 
-    <!-- BOOK NOW (outline) -->
+    <!-- LOGIN -->
     <button
-      class="hidden md:block border border-green-400 text-green-400 px-5 py-2 rounded-full font-semibold
-             hover:bg-green-400 hover:text-black transition-all duration-300"
+      class="hidden md:block bg-green-400 text-black px-5 py-2 rounded-full font-semibold
+             hover:bg-transparent hover:border hover:border-green-400 hover:text-green-400 transition-all duration-300"
     >
-      Book Now!
+      Login
     </button>
 
     <!-- MOBILE MENU -->
@@ -152,10 +160,230 @@
     </div>
 
   </section>
-  <section id="about" class="h-screen bg-green-100 flex justify-center items-center text-4xl font-bold">ABOUT</section>
-  <section id="bikes" class="h-screen bg-orange-100 flex justify-center items-center text-4xl font-bold">BIKES</section>
-  <section id="pricing" class="h-screen bg-purple-100 flex justify-center items-center text-4xl font-bold">PRICING</section>
-  <section id="contact" class="h-screen bg-red-100 flex justify-center items-center text-4xl font-bold">CONTACT</section>
+
+  <!-- BIKES SECTION -->
+  <section id="bikes" class="min-h-screen bg-gray-50 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-5xl font-bold text-gray-800 mb-4">Koleksi <span class="text-green-400">Sepeda</span> Kami</h2>
+        <p class="text-gray-600 text-lg mb-8">Pilih sepeda yang sesuai dengan perjalanan hiburan Anda</p>
+        
+        <!-- Category Buttons -->
+        <div class="flex justify-center gap-4 flex-wrap">
+          <button 
+            @click="selectedCategory = 'semua'"
+            :class="selectedCategory === 'semua' ? 'bg-green-400 text-black' : 'bg-white text-gray-700 hover:bg-gray-100'"
+            class="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-md"
+          >
+            Semua
+          </button>
+          <button 
+            @click="selectedCategory = 'dewasa'"
+            :class="selectedCategory === 'dewasa' ? 'bg-green-400 text-black' : 'bg-white text-gray-700 hover:bg-gray-100'"
+            class="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-md"
+          >
+            Sepeda Dewasa
+          </button>
+          <button 
+            @click="selectedCategory = 'anak'"
+            :class="selectedCategory === 'anak' ? 'bg-green-400 text-black' : 'bg-white text-gray-700 hover:bg-gray-100'"
+            class="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-md"
+          >
+            Sepeda Anak
+          </button>
+          <button 
+            @click="selectedCategory = 'listrik'"
+            :class="selectedCategory === 'listrik' ? 'bg-green-400 text-black' : 'bg-white text-gray-700 hover:bg-gray-100'"
+            class="px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-md"
+          >
+            Sepeda Listrik
+          </button>
+        </div>
+      </div>
+
+      <!-- Bike Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+      
+      <!-- Sepeda Dewasa Category -->
+      <template v-if="selectedCategory === 'dewasa'">
+        
+        <!-- Bike Card 1 - Mountain Bike -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="flex flex-row">
+            <!-- Left: Bike Cover Box -->
+            <div class="w-2/5 p-3 flex items-center justify-center">
+              <div class="bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl w-full h-full flex items-center justify-center min-h-[150px]">
+                <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+                </svg>
+              </div>
+            </div>
+            <!-- Right: Text Content -->
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-gray-800 mb-2">Mountain Bike</h3>
+              <p class="text-gray-600 mb-2 text-xs">Sempurna untuk medan berat dan petualangan off-road. Dilengkapi suspensi kokoh dan ban tebal untuk kenyamanan maksimal di jalur ekstrem.</p>
+              <a href="bike-detail.html?id=1" class="inline-block bg-green-400 text-center text-black font-semibold px-4 py-1 text-xs rounded-lg hover:bg-green-500 transition">
+                Lihat Detail
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bike Card 2 - City Bike -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="flex flex-row">
+            <!-- Left: Bike Cover Box -->
+            <div class="w-2/5 p-3 flex items-center justify-center">
+              <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-xl w-full h-full flex items-center justify-center min-h-[150px]">
+                <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+                </svg>
+              </div>
+            </div>
+            <!-- Right: Text Content -->
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-gray-800 mb-2">City Bike</h3>
+              <p class="text-gray-600 mb-2 text-xs">Nyaman untuk perjalanan sehari-hari di kota. Desain elegan dengan posisi duduk santai, cocok untuk bersepeda santai atau commuting ke kantor.</p>
+              <a href="bike-detail.html?id=2" class="inline-block bg-green-400 text-center text-black font-semibold px-4 py-1 text-xs rounded-lg hover:bg-green-500 transition">
+                Lihat Detail
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bike Card 3 -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="flex flex-row">
+            <!-- Left: Bike Cover Box -->
+            <div class="w-2/5 p-3 flex items-center justify-center">
+              <div class="bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl w-full h-full flex items-center justify-center min-h-[150px]">
+                <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+                </svg>
+              </div>
+            </div>
+            <!-- Right: Text Content -->
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-gray-800 mb-2">Roadbike</h3>
+              <p class="text-gray-600 mb-2 text-xs">Kecepatan maksimal di jalan raya, ringan dan aerodinamis. Frame carbon dengan geometri racing untuk performa terbaik di aspal mulus.</p>
+              <a href="bike-detail.html?id=3" class="inline-block bg-green-400 text-center text-black font-semibold px-4 py-1 text-xs rounded-lg hover:bg-green-500 transition">
+                Lihat Detail
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bike Card 4 - BMX -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="flex flex-row">
+            <!-- Left: Bike Cover Box -->
+            <div class="w-2/5 p-3 flex items-center justify-center">
+              <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-xl w-full h-full flex items-center justify-center min-h-[150px]">
+                <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+                </svg>
+              </div>
+            </div>
+            <!-- Right: Text Content -->
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <h3 class="text-lg font-bold text-gray-800 mb-2">BMX Bike</h3>
+              <p class="text-gray-600 mb-2 text-xs">Sepeda aksi dengan frame kokoh, sempurna untuk trik ekstrem. Ban lebar dan stang tinggi memberikan kontrol maksimal untuk akrobat dan jumping.</p>
+              <a href="bike-detail.html?id=6" class="inline-block bg-green-400 text-center text-black font-semibold px-4 py-1 text-xs rounded-lg hover:bg-green-500 transition">
+                Lihat Detail
+              </a>
+            </div>
+          </div>
+        </div>
+
+        </template>
+
+        <!-- Sepeda Anak Category -->
+        <template v-if="selectedCategory === 'anak'">
+          
+          <!-- Bike Card - Kids Bike -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+            <div class="flex flex-row">
+              <!-- Left: Bike Cover Box -->
+              <div class="w-2/5 p-5 flex items-center justify-center">
+                <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-xl w-full h-full flex items-center justify-center min-h-[220px]">
+                  <svg class="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Right: Text Content -->
+              <div class="w-3/5 p-6 flex flex-col justify-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">Kids Bike</h3>
+                <p class="text-gray-600 mb-4 text-sm">Sepeda khusus untuk anak-anak dengan ukuran yang pas, aman, dan nyaman. Dilengkapi roda bantu untuk pemula.</p>
+                <a href="bike-detail.html?id=5" class="block w-full bg-green-400 text-center text-black font-semibold py-3 rounded-lg hover:bg-green-500 transition">
+                  Lihat Detail
+                </a>
+              </div>
+            </div>
+          </div>
+        
+        </template>
+
+        <!-- Sepeda Listrik Category -->
+        <template v-if="selectedCategory === 'listrik'">
+          
+          <!-- Bike Card 4 - Electric Bike -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+            <div class="flex flex-row">
+              <!-- Left: Bike Cover Box -->
+              <div class="w-2/5 p-5 flex items-center justify-center">
+                <div class="bg-gradient-to-br from-gray-800 to-black rounded-xl w-full h-full flex items-center justify-center min-h-[220px]">
+                  <svg class="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+                  </svg>
+                </div>
+              </div>
+              <!-- Right: Text Content -->
+              <div class="w-3/5 p-6 flex flex-col justify-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">Electric Bike</h3>
+                <p class="text-gray-600 mb-4 text-sm">Sepeda listrik modern dengan tenaga motor pendukung. Hemat tenaga, ramah lingkungan, dan sempurna untuk jarak jauh.</p>
+                <a href="bike-detail.html?id=4" class="block w-full bg-green-400 text-center text-black font-semibold py-3 rounded-lg hover:bg-green-500 transition">
+                  Lihat Detail
+                </a>
+              </div>
+            </div>
+          </div>
+        
+        </template>
+
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex justify-center items-center gap-4 mt-8">
+        <button @click="previousPage" class="bg-green-400 hover:bg-green-500 text-black p-3 rounded-full shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed" :disabled="currentPage === 0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <span class="text-gray-700 font-semibold">{{ currentPage + 1 }} / {{ totalPages }}</span>
+        
+        <button @click="nextPage" class="bg-green-400 hover:bg-green-500 text-black p-3 rounded-full shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed" :disabled="currentPage === totalPages - 1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REVIEW SECTION -->
+  <section id="review" class="h-screen bg-purple-100 flex justify-center items-center text-4xl font-bold">
+    REVIEW
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="h-screen bg-green-100 flex justify-center items-center text-4xl font-bold">
+    ABOUT
+  </section>
 
 </div>
 
@@ -167,18 +395,62 @@ createApp({
     return {
       menus: [
         { id: "home", label: "Home" },
-        { id: "about", label: "About" },
         { id: "bikes", label: "Bikes" },
-        { id: "pricing", label: "Pricing" },
-        { id: "contact", label: "Contact" }
+        { id: "review", label: "Review" },
+        { id: "about", label: "About" }
       ],
+
+      sections: [],
 
       activeMenu: "home",
 
       underline: { left: 0, width: 0, show: false },
 
-      open: false
+      open: false,
+
+      selectedCategory: "semua",
+
+      currentPage: 0,
+
+      bikesPerPage: 4,
+
+      allBikes: {
+        semua: [
+          { id: 1, name: 'Mountain Bike', desc: 'Sempurna untuk medan berat dan petualangan off-road. Dilengkapi suspensi dan ban grip tinggi.', color: 'gray' },
+          { id: 2, name: 'City Bike', desc: 'Ideal untuk berkeliling kota dengan nyaman dan mudah dikendarai.', color: 'green' },
+          { id: 3, name: 'Roadbike', desc: 'Kecepatan maksimal di jalan raya, ringan dan aerodinamis.', color: 'gray' },
+          { id: 6, name: 'BMX Bike', desc: 'Sepeda aksi dengan frame kokoh, sempurna untuk trik ekstrem.', color: 'green' },
+          { id: 5, name: 'Kids Bike', desc: 'Sepeda khusus untuk anak-anak dengan ukuran yang pas, aman, dan nyaman. Dilengkapi roda bantu untuk pemula.', color: 'green' },
+          { id: 4, name: 'Electric Bike', desc: 'Sepeda listrik modern dengan tenaga motor pendukung. Hemat tenaga, ramah lingkungan, dan sempurna untuk jarak jauh.', color: 'gray' }
+        ],
+        dewasa: [
+          { id: 1, name: 'Mountain Bike', desc: 'Sempurna untuk medan berat dan petualangan off-road. Dilengkapi suspensi dan ban grip tinggi.', color: 'gray' },
+          { id: 2, name: 'City Bike', desc: 'Ideal untuk berkeliling kota dengan nyaman dan mudah dikendarai.', color: 'green' },
+          { id: 3, name: 'Roadbike', desc: 'Kecepatan maksimal di jalan raya, ringan dan aerodinamis.', color: 'gray' },
+          { id: 6, name: 'BMX Bike', desc: 'Sepeda aksi dengan frame kokoh, sempurna untuk trik ekstrem.', color: 'green' }
+        ],
+        anak: [
+          { id: 5, name: 'Kids Bike', desc: 'Sepeda khusus untuk anak-anak dengan ukuran yang pas, aman, dan nyaman. Dilengkapi roda bantu untuk pemula.', color: 'green' }
+        ],
+        listrik: [
+          { id: 4, name: 'Electric Bike', desc: 'Sepeda listrik modern dengan tenaga motor pendukung. Hemat tenaga, ramah lingkungan, dan sempurna untuk jarak jauh.', color: 'gray' }
+        ]
+      }
     };
+  },
+
+  computed: {
+    totalPages() {
+      const bikes = this.allBikes[this.selectedCategory] || [];
+      return Math.ceil(bikes.length / this.bikesPerPage);
+    },
+
+    displayedBikes() {
+      const bikes = this.allBikes[this.selectedCategory] || [];
+      const start = this.currentPage * this.bikesPerPage;
+      const end = start + this.bikesPerPage;
+      return bikes.slice(start, end);
+    }
   },
 
   mounted() {
@@ -189,6 +461,28 @@ createApp({
 
     scrollTo(id) {
       document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    },
+
+    scrollLeft(category) {
+      const container = document.getElementById(category + '-scroll');
+      container.scrollBy({ left: -620, behavior: 'smooth' });
+    },
+
+    scrollRight(category) {
+      const container = document.getElementById(category + '-scroll');
+      container.scrollBy({ left: 620, behavior: 'smooth' });
+    },
+
+    nextPage() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+      }
+    },
+
+    previousPage() {
+      if (this.currentPage > 0) {
+        this.currentPage--;
+      }
     },
 
     moveUnderline(event, id) {
