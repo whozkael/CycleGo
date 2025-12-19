@@ -376,13 +376,145 @@
   </section>
 
   <!-- REVIEW SECTION -->
-  <section id="review" class="h-screen bg-purple-100 flex justify-center items-center text-4xl font-bold">
-    REVIEW
+  <section id="review" class="min-h-screen bg-white py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-5xl font-bold text-gray-800 mb-4">Apa Kata <span class="text-green-400">Mereka</span></h2>
+        <p class="text-gray-600 text-lg">Testimoni dari pelanggan yang puas dengan layanan CycleGo</p>
+      </div>
+
+      <!-- Review Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-8">
+        
+        <template v-for="(review, index) in displayedReviews" :key="'review-' + index">
+          <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 border border-gray-100">
+            <!-- Rating Stars -->
+            <div class="flex gap-1 mb-4">
+              <svg v-for="star in 5" :key="star" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            </div>
+            
+            <!-- Review Text -->
+            <p class="text-gray-700 mb-4 text-sm leading-relaxed">{{ review.text }}</p>
+            
+            <!-- User Info -->
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-lg">
+                {{ review.initial }}
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800">{{ review.name }}</h4>
+                <p class="text-xs text-gray-500">{{ review.date }}</p>
+              </div>
+            </div>
+          </div>
+        </template>
+
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex justify-center items-center gap-4 mt-8">
+        <button 
+          @click="previousReviewPage"
+          :disabled="currentReviewPage === 0"
+          :class="currentReviewPage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-500'"
+          class="bg-green-400 text-black p-3 rounded-full transition-all duration-300"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        
+        <span class="text-gray-700 font-semibold">{{ currentReviewPage + 1 }} / {{ totalReviewPages }}</span>
+        
+        <button 
+          @click="nextReviewPage"
+          :disabled="currentReviewPage >= totalReviewPages - 1"
+          :class="currentReviewPage >= totalReviewPages - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-500'"
+          class="bg-green-400 text-black p-3 rounded-full transition-all duration-300"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
   </section>
 
   <!-- ABOUT SECTION -->
-  <section id="about" class="h-screen bg-green-100 flex justify-center items-center text-4xl font-bold">
-    ABOUT
+  <section id="about" class="min-h-screen bg-gray-50 py-20 flex items-center">
+    <div class="max-w-7xl mx-auto px-6 w-full">
+      
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        
+        <!-- Left Side - Bike Image Box -->
+        <div class="w-full md:w-1/2">
+          <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-3xl p-12 shadow-2xl flex items-center justify-center min-h-[400px]">
+            <svg class="w-64 h-64 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right Side - Content -->
+        <div class="w-full md:w-1/2">
+          <h2 class="text-5xl font-bold text-gray-800 mb-6">
+            <span class="text-green-400">CycleGo</span>
+          </h2>
+          <p class="text-gray-700 text-lg leading-relaxed mb-4">
+            CycleGo adalah penyedia layanan rental sepeda terpercaya di Pantai Sanur, Bali. Kami hadir untuk memberikan pengalaman bersepeda yang tak terlupakan di sepanjang pantai yang indah dengan pemandangan matahari terbit yang memukau.
+          </p>
+          <p class="text-gray-700 text-lg leading-relaxed mb-4">
+            Dengan koleksi sepeda berkualitas tinggi dan terawat, mulai dari sepeda gunung, sepeda kota, hingga sepeda listrik modern, kami siap menemani petualangan Anda menjelajahi keindahan Sanur dan sekitarnya.
+          </p>
+          <p class="text-gray-700 text-lg leading-relaxed mb-6">
+            Tim kami yang berpengalaman siap memberikan pelayanan terbaik dan memastikan setiap perjalanan Anda nyaman dan aman. CycleGo - Your Perfect Ride in Paradise!
+          </p>
+          
+          <!-- Feature Points -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-700 font-semibold">Sepeda Berkualitas</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-700 font-semibold">Harga Terjangkau</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-700 font-semibold">Pelayanan 24/7</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-gray-700 font-semibold">Lokasi Strategis</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
   </section>
 
 </div>
@@ -435,7 +567,61 @@ createApp({
         listrik: [
           { id: 4, name: 'Electric Bike', desc: 'Sepeda listrik modern dengan tenaga motor pendukung. Hemat tenaga, ramah lingkungan, dan sempurna untuk jarak jauh.', color: 'gray' }
         ]
-      }
+      },
+
+      currentReviewPage: 0,
+      reviewsPerPage: 4,
+      
+      reviews: [
+        {
+          name: 'Budi Santoso',
+          initial: 'BS',
+          text: 'Pelayanan sangat memuaskan! Sepeda yang disewakan berkualitas tinggi dan terawat dengan baik. Cocok banget buat keliling kota sambil menikmati pemandangan. Pasti akan sewa lagi!',
+          date: '15 Des 2025'
+        },
+        {
+          name: 'Siti Nurhaliza',
+          initial: 'SN',
+          text: 'CycleGo adalah pilihan terbaik untuk sewa sepeda! Staff ramah, proses cepat, dan sepedanya nyaman banget. Anak-anak saya sangat senang bisa bersepeda dengan aman.',
+          date: '12 Des 2025'
+        },
+        {
+          name: 'Andi Wijaya',
+          initial: 'AW',
+          text: 'Sangat puas dengan layanan CycleGo! Mountain bike yang saya sewa sangat tangguh untuk medan off-road. Harga terjangkau dan sepedanya seperti baru. Recommended!',
+          date: '10 Des 2025'
+        },
+        {
+          name: 'Dewi Lestari',
+          initial: 'DL',
+          text: 'Pengalaman sewa sepeda terbaik yang pernah saya alami. Sepeda listriknya modern dan mudah digunakan. Hemat tenaga untuk perjalanan jauh. Top service!',
+          date: '8 Des 2025'
+        },
+        {
+          name: 'Rudi Hartono',
+          initial: 'RH',
+          text: 'Sewa roadbike di CycleGo sangat worth it! Sepedanya ringan dan cepat, sempurna untuk olahraga pagi. Proses booking mudah dan tidak ribet. Mantap!',
+          date: '5 Des 2025'
+        },
+        {
+          name: 'Maya Putri',
+          initial: 'MP',
+          text: 'City bike yang nyaman untuk explore kota bersama teman-teman. Harga sewa reasonable dan sepedanya bersih. CycleGo is the best choice for bike rental!',
+          date: '3 Des 2025'
+        },
+        {
+          name: 'Joko Susilo',
+          initial: 'JS',
+          text: 'BMX bike di sini kualitasnya luar biasa! Frame kokoh dan stabil untuk trik. Staff nya helpful dan memberikan tips yang berguna. Highly recommended!',
+          date: '1 Des 2025'
+        },
+        {
+          name: 'Linda Wati',
+          initial: 'LW',
+          text: 'Sepeda anak untuk si kecil sangat aman dan nyaman. Dilengkapi roda bantu sehingga anak saya bisa belajar dengan percaya diri. Terima kasih CycleGo!',
+          date: '28 Nov 2025'
+        }
+      ]
     };
   },
 
@@ -450,6 +636,16 @@ createApp({
       const start = this.currentPage * this.bikesPerPage;
       const end = start + this.bikesPerPage;
       return bikes.slice(start, end);
+    },
+
+    totalReviewPages() {
+      return Math.ceil(this.reviews.length / this.reviewsPerPage);
+    },
+
+    displayedReviews() {
+      const start = this.currentReviewPage * this.reviewsPerPage;
+      const end = start + this.reviewsPerPage;
+      return this.reviews.slice(start, end);
     }
   },
 
@@ -482,6 +678,18 @@ createApp({
     previousPage() {
       if (this.currentPage > 0) {
         this.currentPage--;
+      }
+    },
+
+    nextReviewPage() {
+      if (this.currentReviewPage < this.totalReviewPages - 1) {
+        this.currentReviewPage++;
+      }
+    },
+
+    previousReviewPage() {
+      if (this.currentReviewPage > 0) {
+        this.currentReviewPage--;
       }
     },
 
