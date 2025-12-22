@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Detail Sepeda - CycleGo</title>
+  
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes shine {
+      0% { background-position: -200%; }
+      100% { background-position: 200%; }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .shine-effect {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      background-size: 200% 100%;
+      animation: shine 3s infinite;
+    }
+    
+    .gradient-border {
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+    }
+    
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(45deg, #4ade80, #16a34a, #4ade80);
+      background-size: 200% 200%;
+      animation: gradient 3s ease infinite;
+      z-index: -1;
+    }
+    
+    @keyframes gradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+      50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+    }
+    
+    .pulse-badge {
+      animation: pulse-glow 2s infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+
+<div id="app">
+
+  <!-- NAVIGATION -->
+  <nav class="bg-[#2B2B2B] w-full fixed top-0 left-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="homepage.html" class="text-2xl font-bold text-green-400 tracking-wide flex items-center gap-1">
+        CYCLEG<span class="inline-block w-6 h-6 rounded-full border-2 border-green-400"></span>
+      </a>
+      <a href="homepage.html#bikes" class="bg-green-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-transparent hover:border hover:border-green-400 hover:text-green-400 transition-all duration-300">
+        Kembali
+      </a>
+    </div>
+  </nav>
+
+  <!-- DETAIL SECTION -->
+  <section v-if="bike" class="pt-24 pb-12">
+    <div class="max-w-6xl mx-auto px-6">
+      
+      <div class="grid md:grid-cols-2 gap-6 items-start">
+        
+        <!-- LEFT: Bike Image -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div 
+            class="rounded-lg h-64 flex items-center justify-center"
+            :style="{ background: `linear-gradient(135deg, ${bike.color1}, ${bike.color2})` }"
+          >
+            <svg class="w-40 h-40 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 20.5A3.5 3.5 0 0 1 1.5 17 3.5 3.5 0 0 1 5 13.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M5 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m8.8-5L19 12.8l-.6 1.2-3-1.2-.4 1-1.3-1.3c-.3.7-1 1.2-1.7 1.2h-1l-.3 1.5-1.4 2.9c-.3.5-.9.6-1.3.4-.5-.3-.6-.9-.4-1.3L9 13.5l-.4-1c-.7-.3-1.1-1-1.1-1.7l.3-1.5-.8-.8H4v-2h3.8l1.8 1.8c.3-.1.6-.2 1-.2h1.5v-.8c0-1.1.9-2 2-2s2 .9 2 2v1.3M19 20.5a3.5 3.5 0 0 1-3.5-3.5 3.5 3.5 0 0 1 3.5-3.5 3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5M19 12a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- RIGHT: Bike Info -->
+        <div>
+          <!-- Header dengan Badge & Info Kreatif -->
+          <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-4 mb-4 shadow-sm border border-gray-100">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                  <!-- Badge Tersedia dengan Animasi -->
+                  <div class="relative">
+                    <span class="bg-gradient-to-r from-green-400 to-green-500 text-white px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 pulse-badge">
+                      <span class="w-2 h-2 bg-white rounded-full animate-ping absolute"></span>
+                      <span class="w-2 h-2 bg-white rounded-full relative"></span>
+                      READY STOCK
+                    </span>
+                  </div>
+                  
+                  <!-- Category Badge -->
+                  <span class="bg-gray-800 text-white px-3 py-1.5 rounded-full text-xs font-bold">
+                    {{ bike.type }}
+                  </span>
+                </div>
+                
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ bike.name }}</h1>
+                
+                <!-- Rating & Reviews -->
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <span class="text-sm font-bold text-gray-800">4.9</span>
+                  </div>
+                  <span class="text-xs text-gray-500">(89 ulasan)</span>
+                  <div class="flex items-center gap-1 text-xs text-gray-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    <span>1.2k dilihat</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Quick Info Icons -->
+            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-gray-200">
+              <div class="flex items-center gap-2">
+                <div class="bg-green-100 p-1.5 rounded-lg">
+                  <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500">Garansi</p>
+                  <p class="text-xs font-bold text-gray-800">100%</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="bg-blue-100 p-1.5 rounded-lg">
+                  <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500">Siap</p>
+                  <p class="text-xs font-bold text-gray-800">24 Jam</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="bg-purple-100 p-1.5 rounded-lg">
+                  <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500">Mulai</p>
+                  <p class="text-xs font-bold text-green-600">{{ bike.price.split(' ')[1] }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Price & Stock -->
+          <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4 mb-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-600 mb-1">Harga Sewa</p>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-bold text-green-600">{{ bike.price }}</span>
+                  <span class="text-sm text-gray-500">/hari</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-gray-600 mb-1">Stok Tersedia</p>
+                <span class="text-2xl font-bold text-green-600">{{ bike.stock }}</span>
+                <span class="text-sm text-gray-500"> unit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Booking Buttons - DIPINDAHKAN KE ATAS -->
+          <div class="flex gap-3 mb-4">
+            <button class="flex-1 bg-green-400 text-black font-bold text-base py-3 rounded-lg hover:bg-green-500 transition shadow-lg relative overflow-hidden group">
+              <span class="relative z-10 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                Pesan Sekarang
+              </span>
+              <div class="absolute inset-0 shine-effect"></div>
+            </button>
+            <button class="px-4 border-2 border-green-400 text-green-500 font-semibold rounded-lg hover:bg-green-50 transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </button>
+            <button class="px-4 border-2 border-green-400 text-green-500 font-semibold rounded-lg hover:bg-green-50 transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Tabs dengan Icon -->
+          <div class="border-b border-gray-200 mb-4">
+            <div class="flex gap-4">
+              <button 
+                @click="activeTab = 'desc'"
+                :class="activeTab === 'desc' ? 'border-green-400 text-green-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                class="pb-2 border-b-2 font-semibold transition-colors duration-200 flex items-center gap-1.5 text-sm"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+                Deskripsi
+              </button>
+              <button 
+                @click="activeTab = 'specs'"
+                :class="activeTab === 'specs' ? 'border-green-400 text-green-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                class="pb-2 border-b-2 font-semibold transition-colors duration-200 flex items-center gap-1.5 text-sm"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                </svg>
+                Spesifikasi
+              </button>
+              <button 
+                @click="activeTab = 'features'"
+                :class="activeTab === 'features' ? 'border-green-400 text-green-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                class="pb-2 border-b-2 font-semibold transition-colors duration-200 flex items-center gap-1.5 text-sm"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+                Fitur
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="min-h-[180px]">
+            <!-- Description Tab -->
+            <div v-if="activeTab === 'desc'">
+              <p class="text-gray-700 text-sm leading-relaxed">
+                {{ bike.description }}
+              </p>
+            </div>
+
+            <!-- Specifications Tab -->
+            <div v-if="activeTab === 'specs'" class="space-y-2">
+              <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                <span class="text-gray-600 text-sm flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 000 2h4a1 1 0 100-2H8z"/>
+                  </svg>
+                  Jenis
+                </span>
+                <span class="text-gray-800 font-semibold text-sm">{{ bike.type }}</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                <span class="text-gray-600 text-sm flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"/>
+                    <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"/>
+                    <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"/>
+                  </svg>
+                  Frame
+                </span>
+                <span class="text-gray-800 font-semibold text-sm">{{ bike.frameSize }}</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                <span class="text-gray-600 text-sm flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                  </svg>
+                  Berat
+                </span>
+                <span class="text-gray-800 font-semibold text-sm">{{ bike.weight }}</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                <span class="text-gray-600 text-sm flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"/>
+                  </svg>
+                  Gear
+                </span>
+                <span class="text-gray-800 font-semibold text-sm">{{ bike.gears }}</span>
+              </div>
+            </div>
+
+            <!-- Features Tab -->
+            <div v-if="activeTab === 'features'" class="grid grid-cols-1 gap-2">
+              <div v-for="(feature, index) in bike.features" :key="index" class="flex items-start gap-2 bg-gradient-to-r from-green-50 to-transparent rounded-lg p-2">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-700 text-sm">{{ feature }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Loading -->
+  <div v-else class="min-h-screen flex items-center justify-center">
+    <p class="text-2xl text-gray-600">Memuat data sepeda...</p>
+  </div>
+
+</div>
+
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data() {
+    return {
+      activeTab: 'desc',
+      bikes: [
+        {
+          id: 1,
+          name: "Mountain Bike",
+          price: "Rp 50.000",
+          type: "Mountain Bike",
+          frameSize: "M (17 inch)",
+          weight: "14 kg",
+          gears: "21 Speed",
+          stock: 5,
+          color1: "#1f2937",
+          color2: "#000000",
+          description: "Mountain Bike kami dirancang khusus untuk petualangan off-road yang menantang. Dilengkapi dengan suspensi depan berkualitas tinggi dan ban grip yang kuat, sepeda ini sempurna untuk menaklukkan medan berat seperti jalur berbatu, tanah berlumpur, dan tanjakan curam.",
+          features: [
+            "Suspensi depan hydraulic untuk penyerapan shock maksimal",
+            "Ban MTB 26 inch dengan grip pattern agresif",
+            "Frame aluminium alloy ringan namun kokoh",
+            "Sistem pengereman disc brake depan-belakang",
+            "Saddle ergonomis dengan padding empuk",
+            "Dilengkapi helm, botol minum, dan toolkit"
+          ]
+        },
+        {
+          id: 2,
+          name: "City Bike",
+          price: "Rp 35.000",
+          type: "City Bike",
+          frameSize: "M (18 inch)",
+          weight: "12 kg",
+          gears: "7 Speed",
+          stock: 8,
+          color1: "#4ade80",
+          color2: "#16a34a",
+          description: "City Bike adalah pilihan ideal untuk berkeliling kota dengan santai dan nyaman. Dengan desain ergonomis dan posisi duduk yang tegak, sepeda ini sangat cocok untuk perjalanan santai di jalan aspal.",
+          features: [
+            "Desain frame step-through untuk kemudahan naik-turun",
+            "Keranjang depan untuk membawa barang bawaan",
+            "Lampu depan dan belakang untuk keamanan",
+            "Fender lengkap melindungi dari cipratan air",
+            "Stand kaki yang kokoh",
+            "Saddle extra comfort dengan pegas"
+          ]
+        },
+        {
+          id: 3,
+          name: "Roadbike",
+          price: "Rp 75.000",
+          type: "Road Bike",
+          frameSize: "L (54 cm)",
+          weight: "9 kg",
+          gears: "18 Speed",
+          stock: 3,
+          color1: "#1f2937",
+          color2: "#000000",
+          description: "Roadbike kami adalah pilihan terbaik untuk Anda yang menginginkan kecepatan dan efisiensi dalam bersepeda. Dengan frame yang ringan dan aerodinamis, sempurna untuk menempuh jarak jauh dengan cepat.",
+          features: [
+            "Frame carbon fiber ultra-ringan",
+            "Handlebar drop untuk posisi aerodinamis",
+            "Ban road 700c dengan tekanan tinggi",
+            "Sistem gear Shimano untuk perpindahan mulus",
+            "Pedal clipless compatible",
+            "Speedometer digital dan bottle cage"
+          ]
+        },
+        {
+          id: 4,
+          name: "Electric Bike",
+          price: "Rp 100.000",
+          type: "Electric Bike",
+          frameSize: "M (17 inch)",
+          weight: "22 kg",
+          gears: "Automatic + 5 Speed",
+          stock: 4,
+          color1: "#4ade80",
+          color2: "#16a34a",
+          description: "Electric Bike adalah solusi modern untuk bersepeda tanpa capek. Dilengkapi dengan motor listrik yang dapat membantu kayuhan Anda, baterai tahan lama dengan jangkauan hingga 50 km per charge.",
+          features: [
+            "Motor listrik 250W dengan 3 mode assist",
+            "Baterai lithium-ion removable 36V 10Ah",
+            "LCD display menampilkan speed, jarak, dan level baterai",
+            "USB charging port untuk gadget",
+            "Lampu LED super terang",
+            "Sistem regenerative braking untuk isi ulang baterai"
+          ]
+        },
+        {
+          id: 5,
+          name: "Kids Bike",
+          price: "Rp 30.000",
+          type: "Kids Bike",
+          frameSize: "S (12 inch)",
+          weight: "8 kg",
+          gears: "Single Speed",
+          stock: 10,
+          color1: "#ec4899",
+          color2: "#be185d",
+          description: "Sepeda khusus untuk anak-anak dengan ukuran yang pas, aman, dan nyaman. Dilengkapi roda bantu untuk pemula dan desain yang menarik untuk anak-anak.",
+          features: [
+            "Frame rendah khusus anak-anak",
+            "Roda bantu removable untuk pemula",
+            "Saddle empuk dengan safety padding",
+            "Chain guard untuk keamanan",
+            "Bel dan reflektor keamanan",
+            "Desain colorful yang menarik"
+          ]
+        },
+        {
+          id: 6,
+          name: "BMX Bike",
+          price: "Rp 60.000",
+          type: "BMX Bike",
+          frameSize: "S (20 inch)",
+          weight: "11 kg",
+          gears: "Single Speed",
+          stock: 6,
+          color1: "#1f2937",
+          color2: "#000000",
+          description: "Sepeda aksi dengan frame kokoh, sempurna untuk trik ekstrem. Ban lebar dan stang tinggi memberikan kontrol maksimal untuk akrobat dan jumping.",
+          features: [
+            "Frame chromoly steel extra kokoh",
+            "Handlebar tinggi untuk kontrol maksimal",
+            "Ban BMX 20 inch dengan grip kuat",
+            "Pedal platform dengan anti-slip",
+            "Pegs untuk grinding tricks",
+            "Saddle pivot untuk freestyle"
+          ]
+        }
+      ],
+      bike: null
+    };
+  },
+
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const bikeId = parseInt(urlParams.get('id'));
+    this.bike = this.bikes.find(b => b.id === bikeId) || this.bikes[0];
+  }
+}).mount("#app");
+</script>
+
+</body>
+</html>
